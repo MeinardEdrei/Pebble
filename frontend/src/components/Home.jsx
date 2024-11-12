@@ -3,12 +3,27 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Home = () => {
   const [input, setInput] = useState('');
   const [content, setContent] = useState([]);
   const [edit, setEdit] = useState(null);
   const [editInput, setEditInput] = useState('');
+
+  function LoginButton() {
+    const { loginWithRedirect } = useAuth0();
+    return <button className='text-white font-bold p-2 rounded-xl' style={{backgroundColor: '#ff8906'}} onClick={() => loginWithRedirect()}>Log In</button>;
+  }
+  
+  function LogoutButton() {
+    const { logout } = useAuth0();
+    return (
+      <button className='text-white font-bold p-2 rounded-xl' style={{backgroundColor: '#ff8906'}} onClick={() => logout({ returnTo: window.location.origin })}>
+        Log Out
+      </button>
+    );
+  }
 
   const handleSubmit = async () => {
     try {
@@ -66,7 +81,11 @@ const Home = () => {
             className='font-bold p-2 rounded-se-full bg-white m-2'>+
           </button>
         </div>
-        <h1 className='text-white p-4 border border-white'>Pebble Developers</h1>
+        <div className='flex justify-end gap-5'>
+          <h1 className='text-white p-4 border border-white'>Pebble Developers</h1>
+            {/* <LoginButton />
+            <LogoutButton /> */}
+          </div>
       </header>
 
       <section className='flex flex-wrap my-20'>
